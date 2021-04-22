@@ -9,6 +9,18 @@ const {DAILY_LIMIT: dailyLimit, HOUR_LIMIT: hourLimit } = process.env;
 
 
 class Appointment {
+
+      async getByDate(req, res) {
+        const { params: { onlyNumberDate } } = req
+        const fixedDate =  moment(onlyNumberDate,"DDMMYYYY").format('DD/MM/YYYY')
+        
+        try{
+          const appointments = await AppointmentModel.find({appointmentDate : fixedDate }).sort({ appointmentTime: 'asc' });
+          res.send({ data: appointments, message: 'Lista de agendamentos foi filtrada!' });
+        }catch(error){
+          res.status(400).send({ message: error.message });
+        }
+      }
    
       async index(req, res) {
         const appointments = await AppointmentModel.find().sort({ appointmentTime: 'asc' });
