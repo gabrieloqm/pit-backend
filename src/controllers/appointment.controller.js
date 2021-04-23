@@ -58,7 +58,8 @@ class Appointment {
             if(scheduledAppointments.length >= parseInt(dailyLimit)){ //if there are more appointments than the daily limit
               res.status(400).send({ message: 'O limite diário de atendimentos foi alcançado! Por favor, tente marcar em outro dia' });
             }else{
-              if(appointmentByHour.length === parseInt(hourLimit)){ //if the appointment's hour is already full...
+              if(appointmentByHour.length >= parseInt(hourLimit)){ //if the appointment's hour is already full... 
+                //...I've also set the '>' sign just in case the db was filled before the backend has been turned on, but we expect it was not
                 if(body.age < 60 || (appointmentByHour.filter( (ap) => ap.age < 60).length === 0)) { //if the person is young or if there are already 60+ ppl scheduled to that time
                   res.status(400).send({ message: 'Este horário de atendimentos já está totalmente preenchido! Por favor, tente marcar em outro horário' });
                 }else{ //remove the youngest person and insert the new one in his place
