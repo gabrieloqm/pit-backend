@@ -16,7 +16,7 @@ mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => console.log('MongoDB connected...'))
-.catch( (err) => console.log('error'));
+.catch( (error) => console.log(error));
 
 const app = express();
 
@@ -27,11 +27,6 @@ app.use(express.json({ limit: "5mb" }));
 app.use(morgan('dev'));
 
 app.use(Routes);
-
-
-app.get("/", (req, res) => {
-  res.send({ message: "Hello World" });
-});
 
 app.listen(HTTP_PORT, () => {
   console.log(`Rodando na porta ${HTTP_PORT}`);
