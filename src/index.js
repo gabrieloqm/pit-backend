@@ -2,13 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
-
 require('dotenv').config();
 
-
 const Routes = require("./routes");
-
-
 
 const { MONGO_URL, HTTP_PORT} = process.env;
 
@@ -20,12 +16,9 @@ mongoose.connect(MONGO_URL, {
 
 const app = express();
 
-
-
 app.use(cors());
 app.use(express.json({ limit: "5mb" }));
 app.use(morgan('dev'));
-
 app.use(Routes);
 
 app.listen(HTTP_PORT, () => {
